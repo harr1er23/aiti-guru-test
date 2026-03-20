@@ -9,7 +9,7 @@ export const useProducts = () => {
     const params = { limit, skip, sortBy, order };
 
     return useQuery({
-        queryKey: ['products', search, sortBy, order, page],
+        queryKey: ['products', search, sortBy, order, page, limit],
         queryFn: () => search ? searchProducts(search, params) : getProducts(params),
     });
 }

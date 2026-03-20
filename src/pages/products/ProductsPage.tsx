@@ -2,13 +2,15 @@ import { useState, useEffect } from 'react';
 import { TextInput, Group, ActionIcon, Indicator, Paper, Box, Title } from '@mantine/core';
 import { Search, Globe, Bell, Mail, SlidersHorizontal } from 'lucide-react';
 import { ProductsTable } from '../../widgets/ProductsTable/ProductsTable';
+import { AddProductModal } from '../../widgets/AddProductModal/AddProductModal';
 import { useProductsStore } from '../../features/products/model/productsStore';
-import { useDebouce } from '../../shared/lib/useDebounce';
+import { useDebounce } from '../../shared/lib/useDebounce';
 
 const ProductsPage = () => {
     const { setSearch } = useProductsStore();
     const [inputValue, setInputValue] = useState('');
-    const debouncedSearch = useDebouce(inputValue, 400);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const debouncedSearch = useDebounce(inputValue, 400);
 
     useEffect(() => {
         setSearch(debouncedSearch);
@@ -49,9 +51,10 @@ const ProductsPage = () => {
             </Paper>
             <Paper shadow="xs" radius="md" mt="30">
               <Box p="md" mt="10">
-                <ProductsTable onAdd={() => {}} />
+                <ProductsTable onAdd={() => setIsModalOpen(true)} />
               </Box>
             </Paper>
+            <AddProductModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </Box>
     );
 };

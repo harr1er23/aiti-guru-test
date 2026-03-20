@@ -8,11 +8,15 @@ export const api = axios.create({
 
 api.interceptors.request.use((config) => {
     const raw = localStorage.getItem('auth') ?? sessionStorage.getItem('auth');
-    if(raw) {
-        const parsed = JSON.parse(raw);
-        const token = parsed?.state?.accessToken;
-        if(token) {
-            config.headers.Authorization = `Bearer ${token}`;
+    if (raw) {
+        try {
+            const parsed = JSON.parse(raw);
+            const token = parsed?.state?.accessToken;
+            if (token) {
+                config.headers.Authorization = `Bearer ${token}`;
+            }
+        } catch {
+            
         }
     }
     return config;

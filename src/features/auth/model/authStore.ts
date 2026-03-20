@@ -53,7 +53,7 @@ export const useAuthStore = create<AuthStore>()(
         });
       },
 
-      logout: () => set({ accessToken: null, user: null }),
+      logout: () => set({ accessToken: null, user: null, rememberMe: false }),
     }),
     {
       name: 'auth',
